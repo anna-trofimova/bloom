@@ -11,9 +11,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    // ✅ Force production domain instead of req.headers.origin
     const siteUrl =
-      process.env.NEXT_PUBLIC_SITE_URL || // set in Vercel → https://bloombobiko.vercel.app
+      process.env.NEXT_PUBLIC_SITE_URL || 
       process.env.PUBLIC_SITE_URL ||
       'http://localhost:5173';
 
