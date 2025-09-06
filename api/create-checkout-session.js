@@ -1,5 +1,5 @@
-import Stripe from "stripe";
 
+import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2024-06-20" });
 
 export default async function handler(req, res) {
@@ -7,22 +7,14 @@ export default async function handler(req, res) {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ error: "Method Not Allowed" });
   }
-
   try {
-    const siteUrl =
-      process.env.NEXT_PUBLIC_SITE_URL ||  
-      process.env.PUBLIC_SITE_URL ||
-      "http://localhost:5173";
-
-    if (!/^https?:\/\//i.test(siteUrl)) {
-      return res.status(400).json({ error: `Invalid site URL: "${siteUrl}"` });
-    }
+    const siteUrl = "https://bloombobiko.vercel.app";
 
     const body = req.body || {};
     let line_items;
 
     if (Array.isArray(body.lineItems)) {
-      line_items = body.lineItems.map((it) => ({
+      line_items = body.lineItems.map(it => ({
         price: String(it.price),
         quantity: Number(it.quantity ?? 1),
       }));
