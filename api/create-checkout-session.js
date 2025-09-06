@@ -1,30 +1,41 @@
-import Stripe from "stripe";
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2024-06-20" });
+// /api/create-checkout-session.js
+import Stripe from 'stripe';
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2024-06-20' });
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).end();
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+    return res.status(405).json({ error: 'Method Not Allowed' });
+  }
+
   try {
-    const { lineItems } = req.body || {};
-    if (!Array.isArray(lineItems) || !lineItems.length) {
-      return res.status(400).json({ error: "Missing lineItems" });
+    const body = req.body || {};
+    let line_items;
+
+    if (Array.isArray(body.lineItems)) {
+      line_items = body.lineItems.map(it => ({
+        price: String(it.price),
+        quantity: Number(it.quantity ?? 1),
+      }));
+    } else if (typeof body.priceId === 'string') {
+      line_items = [{ price: body.priceId, quantity: Number(body.quantity ?? 1) }];
+    } else {
+      return res.status(400).json({
+        error: "Send either { priceId[, quantity] } or { lineItems: [{ price, quantity }] }",
+      });
     }
 
-    // Use env var, or fall back to the request host + https
-    const base =
-      process.env.NEXT_PUBLIC_SITE_URL ||
-      `${req.headers["x-forwarded-proto"] || "https"}://${req.headers.host}`;
-
     const session = await stripe.checkout.sessions.create({
-      mode: "payment",
-      line_items: lineItems,
-      success_url: `${base}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${base}/cancel`,
-      allow_promotion_codes: true,
+      mode: 'payment', // use 'subscription' if your price is recurring
+      line_items,
+      success_url: `${process.env.PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_SITE_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_SITE_URL}/`,
     });
 
-    res.json({ url: session.url });
+    return res.status(200).json({ url: session.url });
   } catch (e) {
-    console.error("create-checkout-session error:", e?.message || e);
-    res.status(400).json({ error: e?.message || "Failed to create checkout session" });
+    console.error('Stripe create session error:', e);
+    return res.status(400).json({ error: e.message || 'Stripe error' });
   }
 }
