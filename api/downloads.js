@@ -22,9 +22,7 @@ export default async function handler(req, res) {
     }
 
     const items = [];
-    const lines = session.line_items?.data || [];
-
-    for (const li of lines) {
+    for (const li of session.line_items?.data || []) {
       const price = li.price;
       const product = price?.product;
       const productName = (product && product.name) || li.description || "Download";
@@ -50,28 +48,13 @@ export default async function handler(req, res) {
       }
 
       for (const fileKey of keys) {
-        if (!fileKey) continue;
-
-        const relative = String(fileKey)
-          .replace(new RegExp(`^${BUCKET}/`), "")
-          .replace(/^\//, "");
-
-        const { data, error } = await supabase.storage
-          .from(BUCKET)
-          .createSignedUrl(relative, 60 * 10); // 10 min
-
+        const relative = String(fileKey).replace(new RegExp(`^${BUCKET}/`), "").replace(/^\//, "");
+        const { data, error } = await supabase.storage.from(BUCKET).createSignedUrl(relative, 60 * 10);
         if (error || !data?.signedUrl) {
           console.error("[downloads] sign error:", { BUCKET, relative, error });
           return res.status(500).json({ error: `Could not sign URL for ${relative}: ${error?.message || "unknown"}` });
         }
-
-        items.push({
-          product: productName,
-          price_id: price?.id || null,
-          quantity: li.quantity || 1,
-          url: data.signedUrl,
-          file_key: fileKey,
-        });
+        items.push({ product: productName, price_id: price?.id || null, quantity: li.quantity || 1, url: data.signedUrl, file_key: fileKey });
       }
     }
 
