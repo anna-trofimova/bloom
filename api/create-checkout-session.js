@@ -8,19 +8,23 @@ export default async function handler(req, res) {
     if (!Array.isArray(lineItems) || !lineItems.length) {
       return res.status(400).json({ error: "Missing lineItems" });
     }
-    const CLIENT_URL = process.env.NEXT_PUBLIC_SITE_URL;
+
+    // Use env var, or fall back to the request host + https
+    const base =
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      `${req.headers["x-forwarded-proto"] || "https"}://${req.headers.host}`;
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items: lineItems,
-      success_url: `${CLIENT_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${CLIENT_URL}/cancel`,
+      success_url: `${base}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${base}/cancel`,
       allow_promotion_codes: true,
     });
 
     res.json({ url: session.url });
   } catch (e) {
-    console.error("create-checkout-session:", e);
-    res.status(400).json({ error: e.message });
+    console.error("create-checkout-session error:", e?.message || e);
+    res.status(400).json({ error: e?.message || "Failed to create checkout session" });
   }
 }
