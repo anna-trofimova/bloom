@@ -1,4 +1,4 @@
-
+// /api/create-checkout-session.js
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2024-06-20" });
 
@@ -8,11 +8,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
   try {
-    const siteUrl = "https://bloombobiko.vercel.app";
+    const siteUrl = "https://bloombobiko.vercel.app"; // keep this hardcoded for stability
 
     const body = req.body || {};
     let line_items;
-
     if (Array.isArray(body.lineItems)) {
       line_items = body.lineItems.map(it => ({
         price: String(it.price),
@@ -29,8 +28,8 @@ export default async function handler(req, res) {
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items,
-      success_url: `${siteUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${siteUrl}/cancel`,
+      success_url: `${siteUrl}/#/success?session_id={CHECKOUT_SESSION_ID}`, // <-- hash route
+      cancel_url: `${siteUrl}/#/cancel`,                                      // <-- hash route
     });
 
     return res.status(200).json({ url: session.url });
