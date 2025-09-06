@@ -3,8 +3,8 @@ import LandingPage from "./LandingPage";
 import Terms from "./pages/Terms.jsx";
 import Privacy from "./pages/Privacy.jsx";
 import Returns from "./pages/Returns.jsx";
-import Success from "./pages/Success.jsx";   // 👈 add
-import Cancel from "./pages/Cancel.jsx";     // 👈 add
+import Success from "./pages/Success.jsx";   
+import Cancel from "./pages/Cancel.jsx";     
 import Footer from "./components/Footer";
 
 export default function App() {

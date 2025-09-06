@@ -11,10 +11,20 @@ export default async function handler(req, res) {
 
   try {
     const body = req.body || {};
-    let line_items;
 
+    const siteUrl =
+      req.headers.origin ||
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      process.env.PUBLIC_SITE_URL ||
+      'http://localhost:5173';
+
+    if (!/^https?:\/\//i.test(siteUrl)) {
+      return res.status(400).json({ error: `Invalid site URL: "${siteUrl}"` });
+    }
+
+    let line_items;
     if (Array.isArray(body.lineItems)) {
-      line_items = body.lineItems.map(it => ({
+      line_items = body.lineItems.map((it) => ({
         price: String(it.price),
         quantity: Number(it.quantity ?? 1),
       }));
@@ -22,20 +32,20 @@ export default async function handler(req, res) {
       line_items = [{ price: body.priceId, quantity: Number(body.quantity ?? 1) }];
     } else {
       return res.status(400).json({
-        error: "Send either { priceId[, quantity] } or { lineItems: [{ price, quantity }] }",
+        error: 'Send either { priceId[, quantity] } or { lineItems: [{ price, quantity }] }',
       });
     }
 
     const session = await stripe.checkout.sessions.create({
-      mode: 'payment', // use 'subscription' if your price is recurring
+      mode: 'payment',
       line_items,
-      success_url: `${process.env.PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_SITE_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_SITE_URL}/`,
+      success_url: `${siteUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${siteUrl}/`,
     });
 
     return res.status(200).json({ url: session.url });
   } catch (e) {
     console.error('Stripe create session error:', e);
-    return res.status(400).json({ error: e.message || 'Stripe error' });
+    return res.status(400).json({ error: e?.message || 'Stripe error' });
   }
 }
