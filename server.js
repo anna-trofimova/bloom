@@ -1,6 +1,6 @@
 import express from "express";
-import archiver from "archiver";
 import cors from "cors";
+import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
@@ -8,34 +8,61 @@ import { createClient } from "@supabase/supabase-js";
 dotenv.config({ path: ".env.server" });
 
 const app = express();
-app.use(
-  cors({
-    origin: [process.env.CLIENT_URL || "http://localhost:5173", "http://localhost:3000"],
-    credentials: false,
-  })
-);
 
-app.use(express.json());
-
+// --- Stripe client (define BEFORE using it) ---
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2024-06-20",
 });
 
+// --- CORS ---
 const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
+app.use(
+  cors({
+    origin: [CLIENT_URL, "http://localhost:5173", "http://localhost:3000"],
+    credentials: false,
+  })
+);
 
+// --- Stripe Webhook must use RAW body and come BEFORE express.json() ---
+app.post("/webhook", bodyParser.raw({ type: "application/json" }), (req, res) => {
+  const sig = req.headers["stripe-signature"];
+  try {
+    const event = stripe.webhooks.constructEvent(
+      req.body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET
+    );
+
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object;
+      console.log("✅ Payment success:", session.id);
+      // TODO: grant access, write to Supabase, send email, etc.
+    }
+
+    res.json({ received: true });
+  } catch (err) {
+    console.error("❌ Webhook Error:", err.message);
+    res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+});
+
+// After webhook only:
+app.use(express.json());
+
+// --- Supabase ---
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 const BUCKET = process.env.SUPABASE_BUCKET || "downloads";
 
-// Health
+// --- Health ---
 app.get("/ping", (_req, res) => res.json({ ok: true }));
 
-// Create Checkout Session (paid)
+// --- Create Checkout Session ---
 app.post("/create-checkout-session", async (req, res) => {
   try {
-    const { lineItems } = req.body; 
+    const { lineItems } = req.body;
     if (!Array.isArray(lineItems) || !lineItems.length) {
       return res.status(400).json({ error: "Missing lineItems" });
     }
@@ -47,6 +74,7 @@ app.post("/create-checkout-session", async (req, res) => {
       cancel_url: `${CLIENT_URL}/cancel`,
       allow_promotion_codes: true,
     });
+
     res.json({ url: session.url });
   } catch (e) {
     console.error("/create-checkout-session error:", e);
@@ -54,7 +82,7 @@ app.post("/create-checkout-session", async (req, res) => {
   }
 });
 
-// Success page helper (order info)
+// --- Success page helper (order info) ---
 app.get("/checkout-session", async (req, res) => {
   try {
     const { id } = req.query; // ?id=cs_...
@@ -83,8 +111,7 @@ app.get("/checkout-session", async (req, res) => {
   }
 });
 
-// Generate downloads for a PAID session
-// Generate downloads for a PAID session (supports single + bundle)
+// --- Generate downloads for a PAID session ---
 app.get("/downloads", async (req, res) => {
   const session_id = req.query.session_id;
   if (!session_id) return res.status(400).json({ error: "Missing session_id" });
@@ -99,13 +126,11 @@ app.get("/downloads", async (req, res) => {
     }
 
     const items = [];
-
     for (const li of session.line_items?.data ?? []) {
       const price = li.price;
       const product = price?.product;
       const productName = (product && product.name) || li.description || "Download";
 
-      // Accept either file_keys (JSON array) or file_key (single string)
       const meta = price?.metadata || {};
       const raw = meta.file_keys ?? meta.file_key ?? null;
 
@@ -116,18 +141,14 @@ app.get("/downloads", async (req, res) => {
           if (Array.isArray(parsed)) keys = parsed;
           else if (typeof parsed === "string" && parsed.trim()) keys = [parsed.trim()];
         } catch {
-          // raw is not JSON; treat as a single path string
           if (typeof raw === "string" && raw.trim()) keys = [raw.trim()];
         }
       }
 
-      // Sign each file path
       for (const fileKey of keys) {
         if (!fileKey) continue;
 
-        // Normalize: accept "downloads/path/file.pdf" or just "path/file.pdf"
         const relative = String(fileKey).replace(new RegExp(`^${BUCKET}/`), "");
-
         const { data, error } = await supabase
           .storage.from(BUCKET)
           .createSignedUrl(relative, 60 * 10); // 10 minutes
@@ -160,31 +181,8 @@ app.get("/downloads", async (req, res) => {
   }
 });
 
-
-app.get("/free-download", async (req, res) => {
-  try {
-    const fileKey = (req.query.file_key || "").toString().trim();
-    if (!fileKey) return res.status(400).json({ error: "Missing file_key" });
-
-    // Normalize to relative path inside BUCKET
-    const relative = fileKey.replace(new RegExp(`^${BUCKET}/`), "");
-
-    const { data, error } = await supabase
-      .storage.from(BUCKET)
-      .createSignedUrl(relative, 60 * 60 * 24 * 7); // 7 days
-
-    if (error || !data?.signedUrl) {
-      console.error("Free signing error", error);
-      return res.status(500).json({ error: "Could not create signed URL" });
-    }
-
-    res.json({ url: data.signedUrl });
-  } catch (e) {
-    console.error("/free-download error:", e);
-    res.status(500).json({ error: "Server error" });
-  }
-});
-
-app.listen(4242, () => {
-  console.log("Server running on http://localhost:4242");
+// --- Start server (use dynamic port for hosting) ---
+const PORT = process.env.PORT || 4242;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });

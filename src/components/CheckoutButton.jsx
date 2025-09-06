@@ -8,7 +8,7 @@ export default function CheckoutButton({ priceId, quantity = 1 }) {
         return;
       }
 
-      const res = await fetch("http://localhost:4242/create-checkout-session", {
+      const res = await fetch("/api/create-checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ lineItems: [{ price: priceId, quantity }] }),

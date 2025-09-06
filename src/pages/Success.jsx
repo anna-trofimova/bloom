@@ -15,7 +15,7 @@ export default function Success() {
     (async () => {
       try {
         const res = await fetch(
-          `http://localhost:4242/checkout-session?id=${encodeURIComponent(sessionId)}`
+          `/api/checkout-session?id=${encodeURIComponent(sessionId)}`
         );
         const data = await res.json();
         if (res.ok) setInfo(data);
@@ -31,8 +31,8 @@ export default function Success() {
     setErr("");
     setItems([]);
     try {
-      const res = await fetch(
-        `http://localhost:4242/downloads?session_id=${encodeURIComponent(sessionId)}`
+     const res = await fetch(
+        `/api/downloads?session_id=${encodeURIComponent(sessionId)}`
       );
       const data = await res.json();
       if (res.ok) setItems(data.items || []);

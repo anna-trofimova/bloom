@@ -8,9 +8,9 @@ export default function FreeDownloadButton({ fileKey }) {
         return;
       }
 
-      const res = await fetch(
-        `http://localhost:4242/free-download?file_key=${encodeURIComponent(fileKey)}`
-      );
+    const res = await fetch(
+  `/api/free-download?file_key=${encodeURIComponent(fileKey)}`
+    );
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
