@@ -1,6 +1,5 @@
 // /api/create-checkout-session.js
 import Stripe from 'stripe';
-
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2024-06-20' });
 
 export default async function handler(req, res) {
@@ -10,11 +9,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    const body = req.body || {};
-
     const siteUrl =
-      req.headers.origin ||
-      process.env.NEXT_PUBLIC_SITE_URL ||
+      process.env.NEXT_PUBLIC_SITE_URL || 
       process.env.PUBLIC_SITE_URL ||
       'http://localhost:5173';
 
@@ -22,9 +18,11 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: `Invalid site URL: "${siteUrl}"` });
     }
 
+    const body = req.body || {};
     let line_items;
+
     if (Array.isArray(body.lineItems)) {
-      line_items = body.lineItems.map((it) => ({
+      line_items = body.lineItems.map(it => ({
         price: String(it.price),
         quantity: Number(it.quantity ?? 1),
       }));
@@ -40,7 +38,7 @@ export default async function handler(req, res) {
       mode: 'payment',
       line_items,
       success_url: `${siteUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${siteUrl}/`,
+      cancel_url: `${siteUrl}/cancel`,
     });
 
     return res.status(200).json({ url: session.url });
