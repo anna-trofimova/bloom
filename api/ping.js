@@ -1,1 +1,3 @@
-export default (req, res) => res.json({ ok: true, time: Date.now() });
+export default function handler(req, res) {
+  res.json({ ok: true, time: Date.now() });
+}
