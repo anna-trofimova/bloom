@@ -2,7 +2,7 @@ import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2024-06-20" });
 
 export default async function handler(req, res) {
-  const { id } = req.query;
+  const { id } = req.query || {};
   if (!id) return res.status(400).json({ error: "Missing session id" });
   try {
     const session = await stripe.checkout.sessions.retrieve(id, {
