@@ -4,13 +4,19 @@ import { supabase, BUCKET } from "./_supabase.js";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2024-06-20" });
 
 export default async function handler(req, res) {
+  // 🔒 CORS – allow your site origin and handle preflight
+  res.setHeader("Access-Control-Allow-Origin", process.env.WEBSITE_URL || "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  if (req.method === "OPTIONS") return res.status(200).end();
+
   try {
     if (req.method !== "GET") {
       res.setHeader("Allow", "GET");
       return res.status(405).json({ error: "Method Not Allowed" });
     }
 
-    const session_id = req.query.session_id;
+    const session_id = (req.query.session_id || "").toString().trim();
     if (!session_id) return res.status(400).json({ error: "Missing session_id" });
 
     const session = await stripe.checkout.sessions.retrieve(session_id, {
@@ -18,7 +24,9 @@ export default async function handler(req, res) {
     });
 
     if (session.mode === "payment" && session.payment_status !== "paid") {
-      return res.status(403).json({ error: `Payment not completed (status: ${session.payment_status})` });
+      return res
+        .status(403)
+        .json({ error: `Payment not completed (status: ${session.payment_status})` });
     }
 
     const items = [];
@@ -49,12 +57,25 @@ export default async function handler(req, res) {
 
       for (const fileKey of keys) {
         const relative = String(fileKey).replace(new RegExp(`^${BUCKET}/`), "").replace(/^\//, "");
-        const { data, error } = await supabase.storage.from(BUCKET).createSignedUrl(relative, 60 * 10);
+        const { data, error } = await supabase
+          .storage
+          .from(BUCKET)
+          .createSignedUrl(relative, 60 * 10);
+
         if (error || !data?.signedUrl) {
           console.error("[downloads] sign error:", { BUCKET, relative, error });
-          return res.status(500).json({ error: `Could not sign URL for ${relative}: ${error?.message || "unknown"}` });
+          return res
+            .status(500)
+            .json({ error: `Could not sign URL for ${relative}: ${error?.message || "unknown"}` });
         }
-        items.push({ product: productName, price_id: price?.id || null, quantity: li.quantity || 1, url: data.signedUrl, file_key: fileKey });
+
+        items.push({
+          product: productName,
+          price_id: price?.id || null,
+          quantity: li.quantity || 1,
+          url: data.signedUrl,
+          file_key: fileKey,
+        });
       }
     }
 
