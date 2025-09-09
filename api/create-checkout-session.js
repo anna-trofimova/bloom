@@ -17,7 +17,18 @@ export default async function handler(req, res) {
     }
 
   try {
-    const siteUrl = process.env.WEBSITE_URL || 'http://localhost:5173';
+    const siteUrl = process.env.WEBSITE_URL || "http://localhost:5173";
+
+    const checkoutSession = await stripe.checkout.sessions.create({
+      mode: "payment",
+      line_items,
+      success_url: `${siteUrl}/#/success?session_id={CHECKOUT_SESSION_ID}`, // with hash
+      cancel_url: `${siteUrl}/#/cancel`,
+      allow_promotion_codes: true,
+    });
+
+    return res.status(200).json({ url: checkoutSession.url });
+
 
     if (!/^https?:\/\//i.test(siteUrl)) {
       return res.status(400).json({ error: `Invalid site URL: "${siteUrl}"` });
