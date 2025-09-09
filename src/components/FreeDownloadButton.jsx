@@ -1,16 +1,16 @@
-
 export default function FreeDownloadButton({ fileKey }) {
+  const API = import.meta.env.VITE_API_URL || window.location.origin;
+
   const handleClick = async () => {
     try {
       if (!fileKey) {
-        console.error("Missing fileKey");
         alert("Missing file key on this card");
         return;
       }
 
-    const res = await fetch(
-  `/api/free-download?file_key=${encodeURIComponent(fileKey)}`
-    );
+      const res = await fetch(
+        `${API}/api/free-download?file_key=${encodeURIComponent(fileKey)}`
+      );
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
@@ -20,11 +20,8 @@ export default function FreeDownloadButton({ fileKey }) {
       }
 
       const data = await res.json();
-      if (data.url) {
-        window.location.assign(data.url);
-      } else {
-        alert("No URL returned");
-      }
+      if (data.url) window.location.assign(data.url);
+      else alert("No URL returned");
     } catch (err) {
       console.error("Network error:", err);
       alert("Network error preparing download");
