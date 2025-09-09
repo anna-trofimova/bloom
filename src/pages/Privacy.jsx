@@ -37,7 +37,7 @@ export default function Privacy() {
       <p className="mt-4">
         At <strong>Bloom</strong> (“we,” “our,” “us”), your privacy is important to us. This Privacy
         Policy explains how we collect, use, and protect your personal information when you visit
-        our website [YourWebsite.com] and purchase our digital products.
+        our website [startyourbloom.com] and purchase our digital products.
       </p>
 
       <div className="mt-6">

@@ -52,7 +52,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 flex flex-col items-center justify-between gap-4 text-sm text-[color:hsl(var(--muted-foreground))] md:flex-row">
-          <p>© {year} BoikoBloom</p>
+          <p>© {year} Bloom</p>
         </div>
       </div>
     </footer>
