@@ -5,16 +5,19 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 });
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
-    return res.status(405).json({ error: 'Method Not Allowed' });
-  }
+  
+  res.setHeader('Access-Control-Allow-Origin', process.env.WEBSITE_URL || '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') return res.status(200).end();
+    if (req.method !== 'POST') {
+      res.setHeader('Allow', 'POST');
+      return res.status(405).json({ error: 'Method Not Allowed' });
+    }
 
   try {
-    const siteUrl =
-      process.env.NEXT_PUBLIC_SITE_URL || 
-      process.env.PUBLIC_SITE_URL ||
-      'http://localhost:5173';
+    const siteUrl = process.env.WEBSITE_URL || 'http://localhost:5173';
 
     if (!/^https?:\/\//i.test(siteUrl)) {
       return res.status(400).json({ error: `Invalid site URL: "${siteUrl}"` });

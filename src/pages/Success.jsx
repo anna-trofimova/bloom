@@ -10,13 +10,13 @@ export default function Success() {
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const API = import.meta.env.VITE_API_URL || window.location.origin;
+
   useEffect(() => {
     if (!sessionId) return;
     (async () => {
       try {
-        const res = await fetch(
-          `/api/checkout-session?id=${encodeURIComponent(sessionId)}`
-        );
+        const res = await fetch(`${API}/api/checkout-session?id=${encodeURIComponent(sessionId)}`);
         const data = await res.json();
         if (res.ok) setInfo(data);
         else setErr(data.error || "Could not load session");
@@ -31,9 +31,7 @@ export default function Success() {
     setErr("");
     setItems([]);
     try {
-     const res = await fetch(
-        `/api/downloads?session_id=${encodeURIComponent(sessionId)}`
-      );
+      const res = await fetch(`${API}/api/downloads?session_id=${encodeURIComponent(sessionId)}`);
       const data = await res.json();
       if (res.ok) setItems(data.items || []);
       else setErr(data.error || "Could not load downloads");
