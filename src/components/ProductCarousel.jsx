@@ -6,12 +6,12 @@ import ProductCard from "./ProductCard";
 export default function ProductCarousel({
   products,
   onPreview,
-  renderCard,          // optional: custom renderer (item, onPreview) => JSX
-  options,             // optional: keen config overrides
+  renderCard,          
+  options,             
   showDots = true,
   onReady,
   onSlideChanged,
-  CheckoutButton,      // optional: passed down to ProductCard
+  CheckoutButton,      
 }) {
   const [current, setCurrent] = useState(0);
 

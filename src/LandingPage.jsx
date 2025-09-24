@@ -1,4 +1,4 @@
-// src/pages/LandingPage.jsx
+
 import { useState } from "react";
 import ProductsMenu from "./components/ProductsMenu";
 import CheckoutButton from "./components/CheckoutButton";

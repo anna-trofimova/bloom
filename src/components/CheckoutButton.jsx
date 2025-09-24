@@ -1,4 +1,4 @@
-// src/components/CheckoutButton.jsx
+
 export default function CheckoutButton({ priceId, quantity = 1 }) {
   const handleClick = async () => {
     try {

@@ -10,7 +10,7 @@ const contactLinks = [
 const legalLinks = [
   { label: "Privacy", to: "/privacy" }, 
   { label: "Terms", to: "/terms" },
-  { label: "Returns & Refunds", to: "/returns" }, // when you add it
+  { label: "Returns & Refunds", to: "/returns" }, 
 ];
 
 export default function Footer() {

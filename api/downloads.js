@@ -4,7 +4,7 @@ import { supabase, BUCKET } from "./_supabase.js";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2024-06-20" });
 
 export default async function handler(req, res) {
-  // 🔒 CORS – allow your site origin and handle preflight
+  
   res.setHeader("Access-Control-Allow-Origin", process.env.WEBSITE_URL || "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");

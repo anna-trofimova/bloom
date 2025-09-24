@@ -19,13 +19,12 @@ export default async function handler(req, res) {
 
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
-      console.log("✅ Payment success:", session.id);
-      // TODO: grant access, write to Supabase, send email, etc.
+      console.log("Payment success:", session.id);
     }
 
     res.json({ received: true });
   } catch (err) {
-    console.error("❌ Webhook Error:", err.message);
+    console.error("Webhook Error:", err.message);
     res.status(400).send(`Webhook Error: ${err.message}`);
   }
 }

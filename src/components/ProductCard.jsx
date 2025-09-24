@@ -19,7 +19,6 @@ export default function ProductCard({ item, onPreview, CheckoutButton }) {
           />
         </button>
 
-        {/* Paid → Buy Now; Free → Download for free */}
         {item.priceId ? (
           <CheckoutButton priceId={item.priceId} />
         ) : (

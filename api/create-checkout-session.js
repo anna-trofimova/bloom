@@ -1,4 +1,4 @@
-// api/create-checkout-session.js
+
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
@@ -18,13 +18,12 @@ export default async function handler(req, res) {
   }
 
   try {
-    // 1) Use your site’s real domain here
+    // My domain
     const siteUrl = process.env.WEBSITE_URL || 'http://localhost:5173';
     if (!/^https?:\/\//i.test(siteUrl)) {
       return res.status(400).json({ error: `Invalid WEBSITE_URL: "${siteUrl}"` });
     }
 
-    // 2) Accept either priceId or lineItems[]
     const body = req.body || {};
     let line_items;
 
@@ -41,7 +40,7 @@ export default async function handler(req, res) {
       });
     }
 
-    // 3) Create session — NO hash for BrowserRouter
+    //Create session 
     const checkoutSession = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items,

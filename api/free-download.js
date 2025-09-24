@@ -1,8 +1,8 @@
-// api/free-download.js
+
 import { supabase, BUCKET } from "./_supabase.js"; 
 
 export default async function handler(req, res) {
-  // CORS (same as other routes)
+  // CORS 
   res.setHeader("Access-Control-Allow-Origin", process.env.WEBSITE_URL || "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
     const relative = fileKey.replace(new RegExp(`^${BUCKET}/`), "");
     const { data, error } = await supabase
       .storage.from(BUCKET)
-      .createSignedUrl(relative, 60 * 60 * 24 * 7); // 7 days
+      .createSignedUrl(relative, 60 * 60 * 24 * 7); 
 
     if (error || !data?.signedUrl) {
       console.error("Free signing error", error);

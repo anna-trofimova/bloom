@@ -3,18 +3,17 @@ import { createPortal } from "react-dom";
 
 export default function ProductsMenu() {
   const [open, setOpen] = useState(false);
-  const [pos, setPos] = useState({ top: 0, left: 0, width: 224 }); // px
+  const [pos, setPos] = useState({ top: 0, left: 0, width: 224 }); 
   const btnRef = useRef(null);
 
-  // Compute dropdown position relative to viewport
   const updatePosition = () => {
     const el = btnRef.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
     setPos({
-      top: r.bottom,         // sits flush under button
-      left: r.left,          // align left edges
-      width: Math.max(224, r.width), // at least 224px wide
+      top: r.bottom,       
+      left: r.left,         
+      width: Math.max(224, r.width), 
     });
   };
 
@@ -75,7 +74,7 @@ export default function ProductsMenu() {
               top: pos.top,
               left: pos.left,
               width: pos.width,
-              zIndex: 2000,            // above everything
+              zIndex: 2000,           
             }}
             className="rounded-lg border border-gray-200 bg-white shadow-lg overflow-hidden"
           >
