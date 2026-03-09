@@ -41,6 +41,7 @@ export default function ProductCarousel({
       <div ref={containerRef} className="keen-slider">
         {products.map((item, idx) => (
           <div key={item.id ?? idx} className="keen-slider__slide px-2">
+              console.log("Rendering ProductCard with priceId:", bundle.priceId);
             {renderCard ? renderCard(item, onPreview) : (
               <ProductCard item={item} onPreview={onPreview} CheckoutButton={CheckoutButton} />
             )}

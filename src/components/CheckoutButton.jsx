@@ -8,6 +8,7 @@ export default function CheckoutButton({ priceId, quantity = 1 }) {
         return;
       }
 
+       console.log("CheckoutButton sending priceId:", priceId);
       const res = await fetch("/api/create-checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

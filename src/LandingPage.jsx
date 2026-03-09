@@ -224,7 +224,7 @@ export default function LandingPage() {
         "/images/november-2025.png"
       ],
       originalPrice: "$9,99", 
-      priceId: "price_1S42zEF4PC9m1AqKvdlh8tiU",
+      priceId: "price_1T92Q7F0CcRCK1mZ8mU1Ye3A",
     },
     {
       id: "bundle-2",
