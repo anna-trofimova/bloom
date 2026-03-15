@@ -110,6 +110,23 @@ export default function ProductsMenu() {
             >
               Bundles
             </a>
+            <a
+              role="menuitem"
+               href="#AI101"
+               className="block px-4 py-2 hover:bg-gray-100"
+               onClick={() => setOpen(false)}
+            >
+               AI 101
+            </a>
+            <a
+              role="menuitem"
+              href="#free"
+              className="block px-4 py-2 hover:bg-gray-100"
+              onClick={() => setOpen(false)}
+            >
+               Free Products
+            </a>
+
           </div>,
           document.body
         )}

@@ -1,4 +1,4 @@
-export default function FreeDownloadButton({ fileKey }) {
+export default function FreeDownloadButton({ fileKey, className = "" }) {
   const API = import.meta.env.VITE_API_URL || window.location.origin;
 
   const handleClick = async () => {
@@ -32,7 +32,7 @@ export default function FreeDownloadButton({ fileKey }) {
     <button
       type="button"
       onClick={handleClick}
-      className="absolute top-3 right-3 z-10 bg-green-600 hover:bg-green-700 text-white text-xs font-semibold px-3 py-1 rounded-full shadow"
+      className={className || "bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-lg shadow"}
     >
       Download for free
     </button>

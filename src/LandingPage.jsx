@@ -9,6 +9,15 @@ import ProductPreviewModal from "./components/ProductPreviewModal";
 
 import logo from "./assets/logo_bloom.png";
 
+import {
+  astrologyProducts,
+  trackerProducts,
+  coloringProducts,
+  bundles,
+  freeProducts
+} from "./data/products";
+
+
 export default function LandingPage() {
   const [email, setEmail] = useState("");
 
@@ -25,226 +34,10 @@ export default function LandingPage() {
   const [bookInst, setBookInst] = useState(null);
   const [bundleInst, setBundleInst] = useState(null);
 
+  const [freeInst, setFreeInst] = useState(null);
+  const [freeCurrent, setFreeCurrent] = useState(0);
+
   // --- DATA ---------------------------------------------------------
-  const astr_products = [
-    {
-      id: "astr-1",
-      title: "ASTROLOGY CHEAT SHEET",
-      price: "$21,99",
-      description:
-        "Unlock the mysteries of the stars with the Astrology Cheat Sheet! This handy guide breaks down everything you need to know about houses, planets, signs, and their powerful combinations. Perfect for beginners and enthusiasts alike, it makes reading charts simple, clear, and fun—helping you understand yourself and others on a whole new level.",
-      image: "/images/book_1.png",
-      images: [
-        "/images/book_1.png",
-        "/images/previews/astro-cheat-pr.png",
-      ],
-      originalPrice: "$26,99", 
-      priceId: "price_1S3zGOF4PC9m1AqKRFDkTE8z",
-    },
-    {
-      id: "astr-2",
-      title: "Mercury Retrograde Survival Guide",
-      price: "$0",
-      description:
-        "Navigate the chaos of Mercury Retrograde with the Mercury Retrograde Survival Guide! Packed with practical dos and don’ts, this guide helps you avoid communication mishaps, travel hiccups, and tech troubles. Easy to follow and full of helpful tips, it’s your go-to companion for staying calm, prepared, and in control when the stars throw a curveball.",
-      image: "/images/mercury_retrograde.png",
-      priceId: null,          
-      fileKey: "astrology/mercury-retrograde-survival-guide.pdf",
-    },
-    {
-      id: "astr-3",
-      title: "Moon Phases Journal",
-      price: "$16,99",
-      description: "Connect with the natural rhythm of the moon with the Moon Phases Journal. Track each phase, reflect on your intentions, and set goals in harmony with the lunar cycle. With prompts for self-discovery and mindful planning, it’s the perfect companion for anyone looking to align their life with the moon’s energy and cultivate a deeper sense of balance.",
-      image: "/images/moon_phase_cover.png",
-      images: [
-        "/images/moon_phase_cover.png",
-        "/images/previews/moon-phase-pr.png",
-      ],
-      originalPrice: "$21,99", 
-      priceId: "price_1S3zNmF4PC9m1AqKSlB1PZOo",
-    }
-  ];
-
-  const habit_products = [
-    {
-      id: "habit-1",
-      title: "Self-care Tracker with pictures",
-      price: "$14,99",
-      description:
-        "Elevate your self-care routine with our beautifully designed digital self-care tracker featuring inspiring images. This weekly planner spans the entire year, helping you stay mindful and motivated as you track your wellness habits. Each week includes visual prompts to encourage reflection and positivity, making your self-care journey both structured and uplifting. Perfect for those who appreciate a visually engaging way to nurture their well-being.",
-      image: "/images/self-care-tracker-per-week.png",
-      images: [
-        "/images/self-care-tracker-per-week.png",
-        "/images/previews/self-tracker-n-pr.png",
-      ],
-      originalPrice: "$19,99", 
-      priceId: "price_1S41DfF4PC9m1AqKkEW1k67W",
-    },
-    { id: "habit-2", 
-      title: "Self-care Tracker Blank", 
-      price: "$11,99", 
-      description: "Take full control of your self-care routine with our minimalist blank digital tracker. This weekly planner covers the whole year and offers the flexibility to personalize your tracking without distractions. Ideal for users who prefer a clean slate to customize their wellness goals and habits according to their unique needs. Stay organized and consistent while crafting your own path to better self-care.", 
-      image: "/images/Self-Care-Tracker-Blank.png",
-      images: [
-        "/images/Self-Care-Tracker-Blank.png",
-        "/images/previews/self-care-weel-blank-pr.png",
-      ],
-      originalPrice: "$16,99", 
-      priceId: "price_1S41FBF4PC9m1AqKyZwPU1DY",
-    },
-    { id: "habit-3", 
-      title: "Self-care Tracker Editable", 
-      price: "$16,99", 
-      description: "Track your self-care progress like never before with our editable digital weekly planner, designed for the entire year. This version includes interactive features that allow you to input your data and visualize your performance through dynamic graphs. Perfect for those who love to analyze their habits and see tangible improvements over time. Combine structure, flexibility, and insight to optimize your wellness journey.", 
-      image: "/images/Self-Care-Tracker-Editable.png",
-      images: [
-        "/images/Self-Care-Tracker-Editable.png",
-        "/images/previews/self-care-week-pr.png",
-      ],
-      originalPrice: "$21,99", 
-      priceId: "price_1S4ONyF4PC9m1AqKuHNWjByi",
-    },
-    { id: "habit-4", 
-      title: "Tracker for SEPTEMBER", 
-      price: "$0", 
-      description: "Stay on top of your month with this simple, stylish Monthly Tracker — your all-in-one calendar to keep life organized and stress-free. Whether it’s appointments, goals, events, or daily to-dos, you’ll have everything laid out clearly in one place. Perfect for staying focused, boosting productivity, and making sure nothing slips through the cracks. Think of it as your month-at-a-glance best friend!", 
-      image: "/images/month-tracker.png",
-      priceId: null,
-      fileKey: "trackers/SEPTEMBER-2025.pdf",
-     },
-     { id: "habit-5", 
-      title: "Tracker for OCTOBER", 
-      price: "$0", 
-      description: "Stay on top of your month with this simple, stylish Monthly Tracker — your all-in-one calendar to keep life organized and stress-free. Whether it’s appointments, goals, events, or daily to-dos, you’ll have everything laid out clearly in one place. Perfect for staying focused, boosting productivity, and making sure nothing slips through the cracks. Think of it as your month-at-a-glance best friend!", 
-      image: "/images/month-tracker.png",
-      priceId: null,
-      fileKey: "trackers/OCTOBER-2025.pdf",
-     },
-     { id: "habit-6", 
-      title: "Tracker for NOVEMBER", 
-      price: "$0", 
-      description: "Stay on top of your month with this simple, stylish Monthly Tracker — your all-in-one calendar to keep life organized and stress-free. Whether it’s appointments, goals, events, or daily to-dos, you’ll have everything laid out clearly in one place. Perfect for staying focused, boosting productivity, and making sure nothing slips through the cracks. Think of it as your month-at-a-glance best friend!", 
-      image: "/images/month-tracker.png",
-      priceId: null,
-      fileKey: "trackers/NOVEMBER-2025.pdf",
-     },
-    { id: "habit-7", 
-      title: "Forget Your EX Guide", 
-      price: "$3", 
-      description: "The Forget Your Ex Habit Tracker is your daily dose of motivation to heal, grow, and move forward. With simple, positive habits to focus on each day, you’ll track your progress, celebrate small wins, and build the strength to let go for good. It’s not just about forgetting — it’s about creating a fresh routine that boosts your confidence, lifts your mood, and helps you feel more like you again.", 
-      image: "/images/forget-ex.png",
-      images: [
-        "/images/forget-ex.png",
-        "/images/previews/forget-ex-pr.png",
-      ],
-      originalPrice: "$4,99", 
-      priceId: "price_1S41GdF4PC9m1AqKcfj77DDG",
-    },
-     { id: "habit-8", 
-      title: "Budget Planner ", 
-      price: "$21,99", 
-      description: "Take control of your money with this Monthly Budget Planner — a simple yet powerful tool to track every dollar. Easily organize your spending into categories, see clear percentage breakdowns, and keep an eye on both debit and credit card expenses in one place. It’s the stress-free way to understand where your money goes, stay on budget, and feel more confident about your finances each month!", 
-      image: "/images/budget-planner.pdf.png",
-      images: [
-        "/images/budget-planner.pdf.png",
-        "/images/previews/budget-planer-pr.png",
-      ],
-      originalPrice: "$26,99", 
-      priceId: "price_1S4NuoF4PC9m1AqKuLBLxIe1",
-    },
-     { id: "habit-9", 
-      title: "Travel Calculator", 
-      price: "$8,99", 
-      description: "Meet your Travel Spending Calculator — the easy way to see exactly where your trip money goes, by category. Log flights, stays, food, transport, activities, and extras, and watch instant totals and percentages break down your budget at a glance. Perfect for planning smarter, avoiding surprises, and making the most of every adventure without overspending. Pack light, spend right!", 
-      image: "/images/travel-calculator.png",
-      images: [
-        "/images/travel-calculator.png",
-        "/images/previews/travel-pr.png",
-      ],
-      originalPrice: "$13,99", 
-      priceId: "price_1S4O3IF4PC9m1AqKWYgg4blN",
-    },
-  ];
-
-  const book_products = [
-    {
-      id: "book-1",
-      title: "Mandala Coloring Pages",
-      price: "$11,99",
-      description: "Relax, focus, and let your creativity flow with Mandala Coloring Pages. Each intricate design is crafted to help you unwind, reduce stress, and enjoy a moment of mindful calm. Perfect for both beginners and experienced colorists, these pages invite you to add your own colors and create beautiful, meditative art you’ll love.",
-      image: "/images/mandala.png",
-      images: [
-        "/images/mandala.png",
-        "/images/previews/mandala-pr.png",
-      ],
-      originalPrice: "$16,99", 
-      priceId: "price_1S42etF4PC9m1AqKkSbbroHS",
-    },
-    {
-      id: "book-2",
-      title: "Coloring Book 15 Animals",
-      price: "$11,99",
-      description: "Unwind and get creative with the *Coloring Book: 15 Animals*! Featuring a collection of adorable and unique animal designs, this book is perfect for both kids and adults who love to color. From playful to majestic creatures, each page gives you the chance to relax, have fun, and bring these animals to life with your own colors. A simple, calming, and joyful way to spark creativity anytime!",
-      image: "/images/animal_children.png",
-      images: [
-        "/images/animal_children.png",
-        "/images/previews/animal-pr.png",
-      ],
-      originalPrice: "$16,99", 
-      priceId: "price_1S42gfF4PC9m1AqKgF6qOCm2",
-    },
-    {
-      id: "book-3",
-      title: "Build My Better Self",
-      price: "11,99",
-      description: "Build My Better Self is a unique coloring book that combines creativity with positivity. Each page features inspiring affirmations alongside beautiful designs, giving you a fun and relaxing way to boost your mood, build confidence, and reinforce healthy habits. Color, reflect, and let each affirmation guide you toward your best self—one vibrant page at a time!",
-      image: "/images/my-better-self.png",
-      images: [
-        "/images/my-better-self.png",
-        "/images/previews/my-better-self-pr.png",
-      ],
-      originalPrice: "$16,99", 
-      priceId: "price_1S42iEF4PC9m1AqKvgborLIO",
-    },
-  ];
-
-  // BUNDLE
-
-    const bundle_products = [
-    {
-      id: "bundle-1",
-      title: "Fall Bundle",
-      price: "$4,99",
-      description: "Get ready to breeze through the season with our Fall Monthly Tracker Bundle — three beautifully designed calendars to help you stay organized from September through November. Keep track of goals, events, and daily to-dos while enjoying a fresh start each month. It’s the perfect way to stay productive, stress-free, and fully present all season long!",
-      image: "/images/month-tracker.png",
-      images: [
-        "/images/september-2025.png",
-        "/images/october-2025.png",
-        "/images/november-2025.png"
-      ],
-      originalPrice: "$9,99", 
-      priceId: "price_1T92Q7F0CcRCK1mZ8mU1Ye3A",
-    },
-    {
-      id: "bundle-2",
-      title: "Astrology Professional",
-      price: "$29,99",
-      description: "The Astrology Professional Bundle brings together three powerful tools to deepen your cosmic journey: the Astrology Cheat Sheet to decode houses, planets, signs, and combinations; the Mercury Retrograde Survival Guide with practical dos and don’ts for smooth sailing during tricky planetary periods; and the Moon Phases Journal to track the lunar cycle, set intentions, and reflect mindfully. Perfect for beginners and enthusiasts alike, this bundle gives you everything you need to understand the stars, navigate their influence, and align your life with cosmic energy.",
-      image: "/images/previews/bundle-astro-pr.png",
-      originalPrice: "$34,99", 
-      priceId: "price_1S447sF4PC9m1AqKzdCWDGQM",
-    },
-     {
-      id: "bundle-3",
-      title: "Spendings Professional",
-      price: "$24,99",
-      description: "The Spending Professional Bundle brings you two powerful tools in one: a Monthly Budget Tracker to keep your everyday finances on point, plus a Travel Calculator to plan trips without overspending. From daily expenses to vacation adventures, you’ll see exactly where your money goes, broken down by category and percentage, with an easy-to-use system that keeps you in control. Perfect for anyone who wants to save smarter, spend with confidence, and enjoy life without financial stress!",
-      image: "/images/previews/bundle-travel-pr.png",
-      originalPrice: "$29,99", 
-      priceId: "price_1S4O8WF4PC9m1AqKCzueeYVB",
-    },
-  ];
 
   // --- RENDER -------------------------------------------------------
   return (
@@ -252,57 +45,79 @@ export default function LandingPage() {
       {/* NAV + HERO */}
       <header className="relative z-[200] overflow-visible isolate">
         <div className="pointer-events-none absolute inset-0 -z-10" style={{ background: "var(--gradient-hero)" }} />
+
+        {/* NAVBAR */}
         <nav className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-          <div className="h-12 w-12 flex items-center justify-center">
-            <img src={logo} alt="Bloom Logo" className="h-16 w-auto" />
-          </div>
+            <div className="relative flex items-center" style={{ width: "140px", height: "100%" }}>
+              <img
+                src={logo}
+                alt="Bloom Logo"
+                className="absolute h-36 w-auto"
+                style={{ top: "0", transform: "translateY(0)" }}
+              />
+            </div>
           <div className="hidden gap-6 md:flex">
-            <a className="btn-ghost focus-ring" href="#features">Features</a>
             <ProductsMenu />
             <a className="btn-ghost focus-ring" href="#testimonials">Stories</a>
             <a className="btn-ghost focus-ring" href="#faq">FAQ</a>
           </div>
-          <div className="flex gap-2">
-            <a className="btn-secondary focus-ring" href="#tools">Get started</a>
-          </div>
         </nav>
 
+        {/* HERO */}
         <section className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-6 py-20 md:grid-cols-2">
           <div>
-            <h1 className="text-hero mb-6">Grab It – </h1>
-            <h1 className="text-hero mb-6">No Cost, Just Magic</h1>
+            <h1 className="text-hero mb-6">One product –</h1>
+            <h1 className="text-hero mb-6">Better Life</h1>
             <p className="text-body-large text-[color:hsl(var(--muted-foreground))] mb-8">
-              Build gentle routines for sleep, stress and focus. Thoughtful reminders, science-backed tips, and a calm space that’s yours.
+              Ready‑to‑Use guidance on your next bright step
             </p>
           </div>
 
           <div>
             <div className="card-minimal p-4">
               <div className="card-soft p-4">
+
                 <div className="grid grid-cols-2 gap-4">
-                  {["Sleep", "Focus", "Mood", "Energy"].map((k) => (
-                    <div key={k} className="rounded-2xl border border-[hsl(var(--border))] bg-white/70 p-6 text-center">
-                      <p className="text-card-title mb-2">{k}</p>
-                      <p className="text-sm text-[color:hsl(var(--muted-foreground))]">Tiny habit · 5 min</p>
-                    </div>
-                  ))}
+                  <a href="#trackers" className="rounded-2xl border border-[hsl(var(--border))] bg-white/70 p-6 text-center hover:shadow-md transition">
+                    <p className="text-card-title mb-2">Self-care Habits</p>
+                    <p className="text-sm text-[color:hsl(var(--muted-foreground))]">Track your routines</p>
+                  </a>
+
+                  <a href="#astrology" className="rounded-2xl border border-[hsl(var(--border))] bg-white/70 p-6 text-center hover:shadow-md transition">
+                    <p className="text-card-title mb-2">Astrology World</p>
+                    <p className="text-sm text-[color:hsl(var(--muted-foreground))]">Discover the stars</p>
+                  </a>
+
+                  <a href="#bundles" className="rounded-2xl border border-[hsl(var(--border))] bg-white/70 p-6 text-center hover:shadow-md transition">
+                    <p className="text-card-title mb-2">Traveling & Budgeting</p>
+                    <p className="text-sm text-[color:hsl(var(--muted-foreground))]">Plan smarter</p>
+                  </a>
+
+                  <a href="#coloring" className="rounded-2xl border border-[hsl(var(--border))] bg-white/70 p-6 text-center hover:shadow-md transition">
+                    <p className="text-card-title mb-2">Coloring Books</p>
+                    <p className="text-sm text-[color:hsl(var(--muted-foreground))]">Relax & create</p>
+                  </a>
                 </div>
-                <div className="mt-4 rounded-2xl border border-[hsl(var(--border))] bg-white/80 p-5">
-                  <p className="text-card-title">Today’s gentle nudge</p>
+
+                <a href="#bundles" className="mt-4 block rounded-2xl border border-[hsl(var(--border))] bg-white/80 p-5 hover:shadow-md transition">
+                  <p className="text-card-title">Explore Bundle Options</p>
                   <p className="mt-1 text-sm text-[color:hsl(var(--muted-foreground))]">
-                    Step outside for 3 minutes of daylight to reset your rhythm.
+                    Get yourself the full package because you deserve it
                   </p>
-                </div>
+                </a>
+
               </div>
             </div>
           </div>
         </section>
+
       </header>
+
 
       {/* FEATURES */}
       <section id="features" className="mx-auto max-w-6xl px-6 py-20">
         <h2 className="text-section-title text-center">What makes it soothing?</h2>
-        <p className="mx-auto mt-3 max-w-2xl text-center text-[color:hsl(var(--muted-foreground))]">
+        <p className="text-center text-[color:hsl(var(--muted-foreground))] mb-12 italic text-lg max-w-2xl mx-auto">
           Designed with calm defaults. Gentle animations, soft colors, and just the right amount of guidance.
         </p>
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -326,74 +141,93 @@ export default function LandingPage() {
           <h2 id="astrology" className="text-section-title text-center mb-6 scroll-mt-28">
             Astrology Guides & Tools
           </h2>
-          <p className="text-center text-[color:hsl(var(--muted-foreground))] mb-12">
+          <p className="text-center text-[color:hsl(var(--muted-foreground))] mb-12 italic text-lg max-w-2xl mx-auto">
             Astrology doesn’t tell you who you are — it’s a mirror that reflects patterns, inviting you to notice what’s already moving within you and the world around you.
           </p>
 
           <ProductCarousel
-            products={astr_products}
+            products={astrologyProducts}
             onPreview={onPreview}
             CheckoutButton={CheckoutButton}
             showDots={false}
             onReady={setAstrInst}
             onSlideChanged={setAstrCurrent}
           />
-          <SliderDots products={astr_products} currentSlide={astrCurrent} instanceRef={astrInst} />
+          <SliderDots products={astrologyProducts} currentSlide={astrCurrent} instanceRef={astrInst} />
 
           {/* HABIT TRACKERS */}
           <h2 id="trackers" className="text-section-title text-center mb-6 scroll-mt-28">
             Habit Trackers
           </h2>
-          <p className="text-center text-[color:hsl(var(--muted-foreground))] mb-12">
-           A habit tracker doesn’t make you disciplined — it’s a mirror that shows the patterns of your days, inviting you to notice what’s 
-           already shaping your life and where you want to grow.
+          <p className="text-center text-[color:hsl(var(--muted-foreground))] mb-12 italic text-lg max-w-2xl mx-auto">
+            A habit tracker doesn't make you disciplined — it's a mirror that shows the patterns of your days, inviting you to notice what's
+            already shaping your life and where you want to grow.
           </p>
 
           <ProductCarousel
-            products={habit_products}
+            products={trackerProducts}
             onPreview={onPreview}
             CheckoutButton={CheckoutButton}   
             showDots={false}
             onReady={setHabitInst}
             onSlideChanged={setHabitCurrent}
           />
-          <SliderDots products={habit_products} currentSlide={habitCurrent} instanceRef={habitInst} />
+          <SliderDots products={trackerProducts} currentSlide={habitCurrent} instanceRef={habitInst} />
 
           {/* COLORING BOOKS */}
           <h2 id="coloring" className="text-section-title text-center mb-6 scroll-mt-28">
             Coloring Books
           </h2>
-          <p className="text-center text-[color:hsl(var(--muted-foreground))] mb-12">
+          <p className="text-center text-[color:hsl(var(--muted-foreground))] mb-12 italic text-lg max-w-2xl mx-auto">
             A coloring book is more than pages to fill — it’s a mirror for your inner world, reflecting your moods and inviting you to slow down, breathe, and create.
           </p>
 
            <ProductCarousel
-            products={book_products}
+            products={coloringProducts}
             onPreview={onPreview}
             CheckoutButton={CheckoutButton}
             showDots={false}
             onReady={setBookInst}
             onSlideChanged={setBookCurrent}
           />
-          <SliderDots products={book_products} currentSlide={bookCurrent} instanceRef={bookInst} />
+          <SliderDots products={coloringProducts} currentSlide={bookCurrent} instanceRef={bookInst} />
 
           {/* BUNDLE PRODUCTS */}
           <h2 id="bundles" className="text-section-title text-center mb-6 scroll-mt-28">
             Our Bundle Options
           </h2>
-          <p className="text-center text-[color:hsl(var(--muted-foreground))] mb-12">
+          <p className="text-center text-[color:hsl(var(--muted-foreground))] mb-12 italic text-lg max-w-2xl mx-auto">
             Get more for less with our bundle options: curated sets that save you money and give you everything you need in one go.
           </p>
 
            <ProductCarousel
-            products={bundle_products}
+            products={bundles}
             onPreview={onPreview}
             CheckoutButton={CheckoutButton}
             showDots={false}
             onReady={setBundleInst}
             onSlideChanged={setBundleCurrent}
           />
-          <SliderDots products={bundle_products} currentSlide={bundleCurrent} instanceRef={bundleInst} />
+          <SliderDots products={bundles} currentSlide={bundleCurrent} instanceRef={bundleInst} />
+
+          {/* FREE PRODUCTS */}
+          <h2 id="free" className="text-section-title text-center mb-6 scroll-mt-28">
+            Free Products
+          </h2>
+          <p className="text-center text-[color:hsl(var(--muted-foreground))] mb-12 italic text-lg max-w-2xl mx-auto">
+            A small gift from us — free downloads to help you get started on your journey
+            toward better habits, clarity, and growth.
+          </p>
+
+          <ProductCarousel
+            products={freeProducts}
+            onPreview={onPreview}
+            CheckoutButton={CheckoutButton}
+            showDots={false}
+            onReady={setFreeInst}
+            onSlideChanged={setFreeCurrent}
+          />
+          <SliderDots products={freeProducts} currentSlide={freeCurrent} instanceRef={freeInst} />
 
         </div>
       </section>
@@ -441,21 +275,57 @@ export default function LandingPage() {
         </div>
     </section>
 
-      {/* FAQ */}
-    <section id="faq" className="mx-auto max-w-5xl px-6 pb-20">
-      <h2 className="text-section-title text-center">FAQ</h2>
-      <div className="mt-8 space-y-4">
-        {[
-          { q: "Is there a free plan?", a: "Yes! You can download our free products: core habits, reflections, and reminders are free." },
-          { q: "How do I receive my product?", a: "After you buy a product, you'll see a download option on the success page to open your files." },
-        ].map((item) => (
-          <details key={item.q} className="card-soft p-5">
-            <summary className="cursor-pointer text-card-title">{item.q}</summary>
-            <p className="mt-2 text-[color:hsl(var(--muted-foreground))]">{item.a}</p>
-          </details>
-        ))}
-      </div>
-    </section>
+     {/* FAQ */}
+
+     <section id="faq" className="mx-auto max-w-5xl px-6 pb-20">
+       <h2 className="text-section-title text-center">FAQ</h2>
+
+       <div className="mt-8 space-y-4">
+         {[
+           {
+             q: "Do you offer free products?",
+             a: (
+               <>
+                 Yes! We offer a selection of free downloads. You can explore them in the{" "}
+                 <a href="#free" className="underline">
+                   Free Products
+                 </a>{" "}
+                 section on this page.
+               </>
+             ),
+           },
+           {
+             q: "Can I return a product or get a refund?",
+             a: "Since our products are digital downloads, all sales are final. We do not offer returns, exchanges, or refunds once a product has been purchased and delivered. If you have trouble accessing your files, please contact us at bloom.clientscare@gmail.com and we will help you receive your purchase.",
+           },
+           {
+             q: "When will I receive my files after purchase?",
+             a: "You will be able to download your files immediately after completing your purchase.",
+           },
+           {
+             q: "I didn’t receive my email or download link. What should I do?",
+             a: "If you didn’t receive your download link, please contact us at bloom.clientscare@gmail.com and we will assist you.",
+           },
+           {
+             q: "Do I need to create an account to buy a product?",
+             a: "No. You can purchase and download our products without creating an account.",
+           },
+           {
+             q: "Is this a physical product?",
+             a: "All our products are digital downloads. No physical items will be shipped.",
+           },
+         ].map((item) => (
+           <details key={item.q} className="card-soft p-5">
+             <summary className="cursor-pointer text-card-title">
+               {item.q}
+             </summary>
+             <p className="mt-2 text-[color:hsl(var(--muted-foreground))]">
+               {item.a}
+             </p>
+           </details>
+         ))}
+       </div>
+     </section>
 
       {/* ONE SHARED PREVIEW MODAL */}
       {previewProduct && (

@@ -1,5 +1,4 @@
-
-export default function CheckoutButton({ priceId, quantity = 1 }) {
+export default function CheckoutButton({ priceId, quantity = 1, className = "" }) {
   const handleClick = async () => {
     try {
       if (!priceId) {
@@ -8,7 +7,6 @@ export default function CheckoutButton({ priceId, quantity = 1 }) {
         return;
       }
 
-       console.log("CheckoutButton sending priceId:", priceId);
       const res = await fetch("/api/create-checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -39,7 +37,7 @@ export default function CheckoutButton({ priceId, quantity = 1 }) {
     <button
       type="button"
       onClick={handleClick}
-      className="absolute top-3 right-3 z-10 bg-green-600 hover:bg-green-700 text-white text-xs font-semibold px-3 py-1 rounded-full shadow"
+      className={className || "bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg shadow"}
     >
       Buy Now
     </button>

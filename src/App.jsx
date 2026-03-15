@@ -6,6 +6,8 @@ import Returns from "./pages/Returns.jsx";
 import Success from "./pages/Success.jsx";   
 import Cancel from "./pages/Cancel.jsx";     
 import Footer from "./components/Footer";
+import ProductPage from "./pages/ProductPage";
+
 
 export default function App() {
   return (
@@ -17,7 +19,8 @@ export default function App() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/returns" element={<Returns />} />
           <Route path="/success" element={<Success />} />  
-          <Route path="/cancel" element={<Cancel />} />    
+          <Route path="/cancel" element={<Cancel />} />
+          <Route path="/product/:id" element={<ProductPage />} />
         </Routes>
       </div>
       <Footer />

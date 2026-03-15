@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const contactLinks = [
-  { label: "Email:bloom.clientscare@gmail.com", href: "mailto:bloom.clientscare@gmail.com" }, 
+  { label: "Email: bloom.clientscare@gmail.com", href: "mailto:bloom.clientscare@gmail.com" },
   { label: "Pinterest", href: "https://es.pinterest.com/BloomExplorer/", external: true }, 
 ];
 
@@ -39,15 +39,15 @@ export default function Footer() {
 
           <section aria-labelledby="footer-legal">
             <h3 id="footer-legal" className="mb-3 text-base font-semibold">Legal</h3>
-            <ul className="space-y-2 text-sm">
-              {legalLinks.map((item) => (
-                <li key={item.label}>
-                  <Link className="hover:underline" to={item.to}>
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+           <ul className="space-y-2 text-sm">
+             {legalLinks.map((item) => (
+               <li key={item.label}>
+                 <Link className="hover:underline" to={item.to} replace>
+                   {item.label}
+                 </Link>
+               </li>
+             ))}
+           </ul>
           </section>
         </div>
 

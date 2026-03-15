@@ -12,6 +12,7 @@
   "dependencies": {
     "@stripe/stripe-js": "^7.9.0",
     "@supabase/supabase-js": "^2.56.1",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "archiver": "^7.0.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
