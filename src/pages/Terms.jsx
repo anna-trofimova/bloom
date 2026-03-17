@@ -1,16 +1,16 @@
 
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 export default function Terms() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleClose = () => {
-
-    if (window.history.length > 1) navigate(-1);
-    else navigate("/");
+    navigate("/");
   };
+
 
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && handleClose();

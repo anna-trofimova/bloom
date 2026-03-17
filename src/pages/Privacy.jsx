@@ -1,13 +1,13 @@
 
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Privacy() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleClose = () => {
-    if (window.history.length > 1) navigate(-1);
-    else navigate("/");
+    navigate("/");
   };
 
   useEffect(() => {

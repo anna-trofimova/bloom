@@ -42,7 +42,7 @@ export default function Footer() {
            <ul className="space-y-2 text-sm">
              {legalLinks.map((item) => (
                <li key={item.label}>
-                 <Link className="hover:underline" to={item.to} replace>
+                 <Link className="hover:underline" to={item.to}>
                    {item.label}
                  </Link>
                </li>
