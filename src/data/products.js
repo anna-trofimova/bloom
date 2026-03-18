@@ -18,19 +18,19 @@ export const products = [
       "/images/book_1.png",
       "/images/previews/astro-cheat-pr.png"
     ],
-    priceId: "price_1S3zGOF4PC9m1AqKRFDkTE8z"
+    priceId: "price_1T92QBF0CcRCK1mZq36XRyDQ"
   },
 
   {
     id: "astr-2",
     category: "astrology",
     title: "Mercury Retrograde Survival Guide",
-    price: "$0",
+    price: "$21,99",
+    originalPrice: "$26,99",
     description:
       "Navigate the chaos of Mercury Retrograde with this practical guide packed with helpful dos and don'ts.",
     image: "/images/mercury_retrograde.png",
-    priceId: null,
-    fileKey: "astrology/mercury-retrograde-survival-guide.pdf"
+    priceId: "price_1TCQ6MF0CcRCK1mZCTSHtyQ5",
   },
 
   {
@@ -46,7 +46,7 @@ export const products = [
       "/images/moon_phase_cover.png",
       "/images/previews/moon-phase-pr.png"
     ],
-    priceId: "price_1S3zNmF4PC9m1AqKSlB1PZOo"
+    priceId: "price_1T92Q8F0CcRCK1mZkXYY4jr0"
   },
 
   // HABIT TRACKERS
@@ -64,7 +64,7 @@ export const products = [
       "/images/self-care-tracker-per-week.png",
       "/images/previews/self-tracker-n-pr.png"
     ],
-    priceId: "price_1S41DfF4PC9m1AqKkEW1k67W"
+    priceId: "price_1T92Q8F0CcRCK1mZa7F3mqF7"
   },
 
   {
@@ -80,7 +80,7 @@ export const products = [
       "/images/Self-Care-Tracker-Blank.png",
       "/images/previews/self-care-weel-blank-pr.png"
     ],
-    priceId: "price_1S41FBF4PC9m1AqKyZwPU1DY"
+    priceId: "price_1T92QCF0CcRCK1mZL0XO7uxF"
   },
 
   {
@@ -96,7 +96,7 @@ export const products = [
       "/images/Self-Care-Tracker-Editable.png",
       "/images/previews/self-care-week-pr.png"
     ],
-    priceId: "price_1S4ONyF4PC9m1AqKuHNWjByi"
+    priceId: "price_1T92Q3F0CcRCK1mZYX1VjtpF"
   },
 
   {
@@ -145,7 +145,7 @@ export const products = [
       "/images/forget-ex.png",
       "/images/previews/forget-ex-pr.png"
     ],
-    priceId: "price_1S41GdF4PC9m1AqKcfj77DDG"
+    priceId: "price_1T92Q5F0CcRCK1mZasLDd2H3"
   },
 
   {
@@ -161,7 +161,7 @@ export const products = [
       "/images/budget-planner.pdf.png",
       "/images/previews/budget-planer-pr.png"
     ],
-    priceId: "price_1S4NuoF4PC9m1AqKuLBLxIe1"
+    priceId: "price_1T92Q3F0CcRCK1mZNXyxoSX1"
   },
 
   {
@@ -177,7 +177,7 @@ export const products = [
       "/images/travel-calculator.png",
       "/images/previews/travel-pr.png"
     ],
-    priceId: "price_1S4O3IF4PC9m1AqKWYgg4blN"
+    priceId: "price_1T92Q3F0CcRCK1mZh2ZyyDx9"
   },
 
   // COLORING BOOKS
@@ -195,7 +195,7 @@ export const products = [
       "/images/mandala.png",
       "/images/previews/mandala-pr.png"
     ],
-    priceId: "price_1S42etF4PC9m1AqKkSbbroHS"
+    priceId: "price_1T92Q3F0CcRCK1mZrBcJ6dxR"
   },
 
   {
@@ -211,7 +211,7 @@ export const products = [
       "/images/animal_children.png",
       "/images/previews/animal-pr.png"
     ],
-    priceId: "price_1S42gfF4PC9m1AqKgF6qOCm2"
+    priceId: "price_1T92Q3F0CcRCK1mZGhdPGXDf"
   },
 
   {
@@ -227,7 +227,7 @@ export const products = [
       "/images/my-better-self.png",
       "/images/previews/my-better-self-pr.png"
     ],
-    priceId: "price_1S42iEF4PC9m1AqKvgborLIO"
+    priceId: "price_1T92Q5F0CcRCK1mZWAw9CepN"
   }
 
 ];
@@ -263,7 +263,7 @@ export const bundles = [
     description:
       "Astrology bundle including cheat sheet, retrograde guide and moon journal.",
     image: "/images/previews/bundle-astro-pr.png",
-    priceId: "price_1S447sF4PC9m1AqKzdCWDGQM"
+    priceId: "price_1T92Q3F0CcRCK1mZHa7TJRyT"
   },
 
   {
@@ -275,7 +275,7 @@ export const bundles = [
     description:
       "Budget planner + travel calculator bundle.",
     image: "/images/previews/bundle-travel-pr.png",
-    priceId: "price_1S4O8WF4PC9m1AqKCzueeYVB"
+    priceId: "price_1T92Q5F0CcRCK1mZaAR7Fd6F"
   }
 
 ];

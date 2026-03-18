@@ -38,6 +38,8 @@ build/
 .env.server
 *.local
 
+server.js
+
 # Coverage / testing
 coverage/
 .cypress-cache/
@@ -58,3 +60,4 @@ coverage/
 Thumbs.db
 .vercel
 .env*.local
+
