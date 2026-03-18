@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { useEffect } from "react";
 import { allProducts } from "../data/products";
 import CheckoutButton from "../components/CheckoutButton";
 import FreeDownloadButton from "../components/FreeDownloadButton";
@@ -6,6 +7,11 @@ import ProductImages from "../components/ProductImages";
 
 export default function ProductPage() {
   const { id } = useParams();
+
+  useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [id]);
+
   const product = allProducts.find((p) => p.id === id);
 
   if (!product) return <p>Product not found</p>;

@@ -10,6 +10,9 @@ export default function Returns() {
     navigate("/");
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && handleClose();
