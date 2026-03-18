@@ -7,7 +7,11 @@ export default function CheckoutButton({ priceId, quantity = 1, className = "" }
         return;
       }
 
-      const res = await fetch("/api/create-checkout-session", {
+  // LOCAL DEV: uses VITE_API_URL=http://localhost:3001
+  // PRODUCTION: uses VITE_API_URL=https://startyourbloom.com (set in Vercel env vars)
+      const API = import.meta.env.VITE_API_URL || "";
+
+      const res = await fetch(`${API}/api/create-checkout-session`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ lineItems: [{ price: priceId, quantity }] }),

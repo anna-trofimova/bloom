@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"node server.js\" \"vite\"",
+    "dev:local": "vercel dev",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"

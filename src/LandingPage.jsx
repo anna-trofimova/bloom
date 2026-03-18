@@ -58,7 +58,7 @@ export default function LandingPage() {
             </div>
           <div className="hidden gap-6 md:flex">
             <ProductsMenu />
-            <a className="btn-ghost focus-ring" href="#testimonials">Stories</a>
+            <a className="btn-ghost focus-ring" href="#testimonials">Reviews</a>
             <a className="btn-ghost focus-ring" href="#faq">FAQ</a>
           </div>
         </nav>
@@ -113,27 +113,6 @@ export default function LandingPage() {
 
       </header>
 
-
-      {/* FEATURES */}
-      <section id="features" className="mx-auto max-w-6xl px-6 py-20">
-        <h2 className="text-section-title text-center">What makes it soothing?</h2>
-        <p className="text-center text-[color:hsl(var(--muted-foreground))] mb-12 italic text-lg max-w-2xl mx-auto">
-          Designed with calm defaults. Gentle animations, soft colors, and just the right amount of guidance.
-        </p>
-        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
-          {[
-            { title: "Kind reminders", copy: "Flexible nudges that respect your schedule." },
-            { title: "Daily micro-rituals", copy: "Tiny steps that compound into big change." },
-            { title: "Progress you can feel", copy: "Simple streaks and reflections—no pressure." },
-          ].map((f) => (
-            <div key={f.title} className="card-soft p-6">
-              <h3 className="text-card-title">{f.title}</h3>
-              <p className="mt-2 text-[color:hsl(var(--muted-foreground))]">{f.copy}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* SHOP SECTIONS */}
       <section id="tools" className="bg-[hsl(var(--background))] py-20">
         <div className="mx-auto max-w-6xl px-6">
@@ -153,7 +132,7 @@ export default function LandingPage() {
             onReady={setAstrInst}
             onSlideChanged={setAstrCurrent}
           />
-          <SliderDots products={astrologyProducts} currentSlide={astrCurrent} instanceRef={astrInst} />
+          <div className="mb-16" />
 
           {/* HABIT TRACKERS */}
           <h2 id="trackers" className="text-section-title text-center mb-6 scroll-mt-28">
@@ -167,12 +146,12 @@ export default function LandingPage() {
           <ProductCarousel
             products={trackerProducts}
             onPreview={onPreview}
-            CheckoutButton={CheckoutButton}   
+            CheckoutButton={CheckoutButton}
             showDots={false}
             onReady={setHabitInst}
             onSlideChanged={setHabitCurrent}
           />
-          <SliderDots products={trackerProducts} currentSlide={habitCurrent} instanceRef={habitInst} />
+          <div className="mb-16" />
 
           {/* COLORING BOOKS */}
           <h2 id="coloring" className="text-section-title text-center mb-6 scroll-mt-28">
@@ -190,7 +169,8 @@ export default function LandingPage() {
             onReady={setBookInst}
             onSlideChanged={setBookCurrent}
           />
-          <SliderDots products={coloringProducts} currentSlide={bookCurrent} instanceRef={bookInst} />
+
+          <div className="mb-16" />
 
           {/* BUNDLE PRODUCTS */}
           <h2 id="bundles" className="text-section-title text-center mb-6 scroll-mt-28">
@@ -208,7 +188,8 @@ export default function LandingPage() {
             onReady={setBundleInst}
             onSlideChanged={setBundleCurrent}
           />
-          <SliderDots products={bundles} currentSlide={bundleCurrent} instanceRef={bundleInst} />
+
+          <div className="mb-16" />
 
           {/* FREE PRODUCTS */}
           <h2 id="free" className="text-section-title text-center mb-6 scroll-mt-28">
@@ -227,7 +208,8 @@ export default function LandingPage() {
             onReady={setFreeInst}
             onSlideChanged={setFreeCurrent}
           />
-          <SliderDots products={freeProducts} currentSlide={freeCurrent} instanceRef={freeInst} />
+
+          <div className="mb-16" />
 
         </div>
       </section>

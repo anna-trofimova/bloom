@@ -6,14 +6,14 @@ import ProductCard from "./ProductCard";
 export default function ProductCarousel({
   products,
   onPreview,
-  renderCard,          
-  options,             
-  showDots = true,
+  renderCard,
+  options,
   onReady,
   onSlideChanged,
-  CheckoutButton,      
+  CheckoutButton,
 }) {
   const [current, setCurrent] = useState(0);
+  const [maxIdx, setMaxIdx] = useState(0);
 
   const defaultOptions = {
     loop: false,
@@ -28,6 +28,12 @@ export default function ProductCarousel({
       setCurrent(idx);
       onSlideChanged && onSlideChanged(idx);
     },
+    created(s) {
+      setMaxIdx(s.track.details.maxIdx);
+    },
+    updated(s) {
+      setMaxIdx(s.track.details.maxIdx);
+    },
   };
 
   const [containerRef, instanceRef] = useKeenSlider({ ...defaultOptions, ...(options || {}) });
@@ -36,8 +42,23 @@ export default function ProductCarousel({
     onReady && onReady(instanceRef);
   }, [instanceRef, onReady]);
 
+  const isFirst = current === 0;
+  const isLast = current >= maxIdx;
+
   return (
     <div className="relative">
+      {!isFirst && (
+        <button
+          onClick={() => instanceRef.current?.prev()}
+          className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white shadow-sm transition hover:bg-gray-50"
+          aria-label="Previous slide"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M10 12L6 8l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+      )}
+
       <div ref={containerRef} className="keen-slider">
         {products.map((item, idx) => (
           <div key={item.id ?? idx} className="keen-slider__slide px-2">
@@ -48,17 +69,16 @@ export default function ProductCarousel({
         ))}
       </div>
 
-      {showDots && (
-        <div className="mt-3 flex items-center justify-center gap-2">
-          {products.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => instanceRef.current?.moveToIdx(i)}
-              className={`h-2 w-2 rounded-full ${i === current ? "bg-black" : "bg-gray-300"}`}
-              aria-label={`Go to slide ${i + 1}`}
-            />
-          ))}
-        </div>
+      {!isLast && (
+        <button
+          onClick={() => instanceRef.current?.next()}
+          className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white shadow-sm transition hover:bg-gray-50"
+          aria-label="Next slide"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
       )}
     </div>
   );

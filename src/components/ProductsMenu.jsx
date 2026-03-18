@@ -84,15 +84,25 @@ export default function ProductsMenu() {
               className="block px-4 py-2 hover:bg-gray-100"
               onClick={() => setOpen(false)}
             >
-              Astrology Guides
+              Astrology World
             </a>
+
+             <a
+              role="menuitem"
+              href="#travelingbudget"
+              className="block px-4 py-2 hover:bg-gray-100"
+              onClick={() => setOpen(false)}
+              >
+                 Traveling & Budgeting
+              </a>
+
             <a
               role="menuitem"
               href="#trackers"
               className="block px-4 py-2 hover:bg-gray-100"
               onClick={() => setOpen(false)}
             >
-              Habit Trackers
+              Self-care Habits
             </a>
             <a
               role="menuitem"
@@ -102,6 +112,16 @@ export default function ProductsMenu() {
             >
               Coloring Books
             </a>
+
+             <a
+              role="menuitem"
+              href="#AI101"
+              className="block px-4 py-2 hover:bg-gray-100"
+              onClick={() => setOpen(false)}
+              >
+                AI 101
+              </a>
+
             <a
               role="menuitem"
               href="#bundles"
@@ -109,14 +129,6 @@ export default function ProductsMenu() {
               onClick={() => setOpen(false)}
             >
               Bundles
-            </a>
-            <a
-              role="menuitem"
-               href="#AI101"
-               className="block px-4 py-2 hover:bg-gray-100"
-               onClick={() => setOpen(false)}
-            >
-               AI 101
             </a>
             <a
               role="menuitem"
