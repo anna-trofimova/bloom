@@ -112,7 +112,7 @@ export default function LandingPage() {
                   </a>
 
                   <a
-                    href="#bundles"
+                    href="#travelingbudget"
                     className="rounded-2xl border border-[hsl(var(--border))] bg-white/70 p-6 text-center hover:shadow-md transition"
                   >
                     <p className="text-card-title mb-2">
